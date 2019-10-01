@@ -58,10 +58,10 @@ body {
   word-wrap: break-word; }
 
 .reveal h1 {
-  font-size: 3.77em; }
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 3.77em; }
 
 .reveal h2 {
-    font-family: 'Josefin Sans', sans-serif;
   font-size: 2.11em; }
 
 .reveal h3 {
@@ -157,7 +157,7 @@ body {
 
 .reveal code {
     font-family: 'Fira Mono', monospace;
-  text-transform: none; }
+    text-transform: none; }
 
 .reveal pre code {
   display: block;
