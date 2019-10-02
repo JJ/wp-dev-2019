@@ -85,10 +85,94 @@
 
                 <section data-background='img/trellis-template.png'>
                   <h1><code>git.io/jj-tt</code></h1>
+
+                  <aside class='notes'>Simplemente siguiendo las
+                instrucciones de Trellis, se crea esta plantilla, de
+                forma que puedes empezar a trabajar directamente. La
+                plantilla está en un repo, así que puedes hacerla
+                    evolucionar según necesites más o menos cosas</aside>
                 </section>
 
-
               </section>
+
+              <section> <!-- Yendo más allá con GitHub -->
+                <section
+                data-background='https://live.staticflickr.com/65535/48832687302_29e47b7f5b_k_d.jpg'><h1>GitHub
+                  tiene un API</h1>
+                  <aside class='notes'>Hecho conocido, pero algo que
+                podemos usar para nuestro provecho. Está enganchado al
+                sistema de eventos de git, pero no sólo: incluye
+                    también comentarios y todo lo que suceda en general en él.</aside>
+                </section>
+
+                <section data-background='img/github-action.png'>
+                  <h1>Eventos causan <em>actions</em></h1>
+                </section>
+
+                <section><h1><code>.github/workflows/label.yml</code></h1>
+                  <pre><code>name: Labeler
+on: [pull_request]
+
+jobs:
+  label:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/labeler@v2
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+                  </code></pre>
+
+                  <aside class='notes'>Las acciones de GitHub se
+                conectan simplemente metiéndolas en el directorio
+                    correspondiente. Se activa con un evento que
+                figura en <code>on</code>, y ejecuta una serie de
+                trabajos, que a su vez se ejecutan en una serie de
+                pasos. Esas acciones pueden usar el API de GitHub,
+                como se ve aquí: tienen una serie de variables de
+                entorno que se pueden añadir directamente al
+                programa. El programa, a continuación, las usará para
+                    acceder al API de forma segura.</aside>
+                </section>
+
+                <section><h1>Github Actions está en beta</h1>
+                  <img src='img/github-actions-menu.png'>
+                  <aside class='notes'>Ya están activadas en ciertos
+                  repositorios, pero si quieres usarlas tú en los
+                  tuyos tendrás que solicitar el acceso a la beta. Lo
+                    suelen dar, sin embargo, sin mucha
+                    alharaca.</aside>
+                </section>
+
+                <section>
+                  <h1>Algunos ficheros son importantes</h1>
+                  <pre><code>name: "Comprueba presencia de ficheros"
+on: [pull_request, push]
+
+jobs:
+  file_presence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: "Comprueba ficheros importantes"
+        uses: JJ/files-present-action@releases/v1
+        with:
+          files: "version, Vagrantfile, vvv-config.yml"
+                  </code></pre>
+                </section>
+
+                <section><h1>Stuff happens</h1>
+                  <img src='img/delete-version.png' alt='Deletes version'>
+
+                </section>
+
+                <section><h1>Echa el freno, Macareno</h1>
+                  <img src='img/action-aborted.png' alt='busted'>
+                </section>
+              </section>
+
+              
 	    </div>
 	  </div>
 
