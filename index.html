@@ -109,7 +109,7 @@
                   <h1>Eventos causan <em>actions</em></h1>
                 </section>
 
-                <section><h1><code>.github/workflows/label.yml</code></h1>
+                <section><h3><code>.github/workflows/label.yml</code></h3>
                   <pre><code>name: Labeler
 on: [pull_request]
 
@@ -137,7 +137,7 @@ jobs:
                 </section>
 
                 <section><h1>Github Actions está en beta</h1>
-                  <img src='img/github-actions-menu.png'>
+                  <img src='img/github-action-menu.png'>
                   <aside class='notes'>Ya están activadas en ciertos
                   repositorios, pero si quieres usarlas tú en los
                   tuyos tendrás que solicitar el acceso a la beta. Lo
@@ -146,7 +146,7 @@ jobs:
                 </section>
 
                 <section>
-                  <h1>Algunos ficheros son importantes</h1>
+                  <h2>Algunos ficheros son importantes</h2>
                   <pre><code>name: "Comprueba presencia de ficheros"
 on: [pull_request, push]
 
@@ -160,6 +160,12 @@ jobs:
         with:
           files: "version, Vagrantfile, vvv-config.yml"
                   </code></pre>
+
+                  <aside class='notes'>Aquí encadenamos dos acciones:
+                una del propio GitHub que descarga el repo localmente
+                (las actions no actúan sobre el repo necesariamente,
+                por eso hace falta descargalo con una action) y a
+                    continuación comprueba los ficheros.</aside>
                 </section>
 
                 <section><h1>Stuff happens</h1>
@@ -170,8 +176,39 @@ jobs:
                 <section><h1>Echa el freno, Macareno</h1>
                   <img src='img/action-aborted.png' alt='busted'>
                 </section>
+
+                <section data-background='img/action-aborted-busted.png'>
+                  <aside class='notes'>Útil sobre todo en PRs, pero
+                  también en todo tipo de cosas, desde un push (si hay
+                  varios participantes) hasta etiquetado automático de
+                  issues o, en realidad, cualquier cosa como
+                    reorganizar el código</aside>
+                 </section>
+
+                 <section>
+                   <pre><code>import * as core from '@actions/core';
+import fs from 'fs';
+async function run() {
+  try {
+      const files = core.getInput('files')
+      const fileList = files.split(/,\s+/)
+      var doesntExist: string[] = []
+      fileList.forEach( function( file ) {          
+          if ( ! fs.existsSync(file) ) {
+              doesntExist.push( file )
+          }
+      })
+      if (doesntExist.length > 0 ) {
+          core.setFailed( "These files do not exist: " + doesntExist.join( ", " ) )
+      }
+  } catch (error) { //       core.setFailed(error.message);
+  }
+}
+run();</code></pre>                 
+                 </section>
               </section>
 
+              <section><!-- Pero no puedo acceder a actions -->
               
 	    </div>
 	  </div>
