@@ -90,7 +90,10 @@
                 instrucciones de Trellis, se crea esta plantilla, de
                 forma que puedes empezar a trabajar directamente. La
                 plantilla está en un repo, así que puedes hacerla
-                    evolucionar según necesites más o menos cosas</aside>
+                    evolucionar según necesites más o menos cosas. Hay
+                un trellis-cli que hace cosas, pero requiere go, por
+                ejemplo. Esto es simplemente una plantilla que puedes
+                usar directamente desde GitHub.</aside>
                 </section>
 
               </section>
@@ -209,7 +212,40 @@ run();</code></pre>
               </section>
 
               <section><!-- Pero no puedo acceder a actions -->
-              
+                <section><h1>Los estándares WPC son importantes</h1>
+                  <aside class='notes'>Estándares que debería seguir
+                    un proyecto, <a
+                href='https://packagist.org/packages/wp-coding-standards/wpcs'>aquí</a>
+                  </aside>
+                </section>
+
+                <section data-background='https://live.staticflickr.com/8386/8519896461_b47ded041a_o_d.jpg'><h1>Usa un <em>gancho</em> local</h1>
+                  <h2 class='fragment'>Usa bibliotecas tales como <a
+                    href='https://github.com/claudiosanches/wp-git-hooks'><code>wp-git-hooks</code>
+                  </a>
+                  </h2>
+                </section>
+
+                <section><h1>¿Dónde está la chicha? <code>pre-commit</code></h1>
+                  <pre><code>STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD | grep \\\\.php`
+# Más cosas...
+SFILES=${SFILES:-$STAGED_FILES_CMD}
+# Más cosas...
+if [ "$FILES" != "" ]; then
+  echo "Running Code Sniffer."
+  ./vendor/bin/phpcs --encoding=utf-8 -n -p $FILES
+  if [ $? != 0 ]; then
+    echo "Fix the error before commit!"
+    echo "Run"
+    echo "  ./vendor/bin/phpcbf $FILES"
+    echo "for automatic fix or fix it manually."
+    exit 1
+  fi
+fi
+                  </code></pre>
+              </section>
+
+              </section>
 	    </div>
 	  </div>
 
